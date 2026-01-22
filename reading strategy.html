@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <title>14가지 독서전략</title>
+
+  <link href="style.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Noto Sans KR', sans-serif;
+      background: linear-gradient(135deg, #F5F7FA 0%, #C3CFE2 100%);
+      /* Match style.css */
+      line-height: 1.6;
+      color: #5D4037;
+    }
+
+    header {
+      background: #FFAB91;
+      color: white;
+      padding: 32px;
+      text-align: center;
+      box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      /* Remove shadow for clean look */
+      text-shadow: none;
+    }
+
+    main {
+      display: flex;
+      min-height: calc(100vh - 150px);
+    }
+
+    nav {
+      width: 26%;
+      background: #FFF3E0;
+      padding: 16px;
+      border-right: 3px solid #FFCC80;
+    }
+
+    nav button {
+      width: 100%;
+      margin-bottom: 8px;
+      padding: 10px 12px;
+      border: 2px solid #FFCC80;
+      border-radius: 12px;
+      background: white;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 600;
+      color: #5D4037;
+      transition: all 0.2s;
+    }
+
+    nav button:hover {
+      background: #FFE0B2;
+      transform: translateY(-2px);
+    }
+
+    section {
+      width: 74%;
+      padding: 32px;
+      box-sizing: border-box;
+      background-color: #FFFDE7;
+    }
+
+    .definition {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      border: 3px solid #FFAB91;
+      box-shadow: 4px 4px 0 #FFCC80;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 1.1rem;
+    }
+
+    .source {
+      text-align: right;
+      font-size: 1rem;
+      color: #8D6E63;
+      margin-top: 6px;
+      margin-top: 6px;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-style: italic;
+    }
+
+    .section-title {
+      margin-top: 36px;
+      font-size: 1.5rem;
+      color: #FF7043;
+      background: #FFF3E0;
+      display: inline-block;
+      padding: 5px 15px;
+      border-radius: 20px;
+    }
+
+    /* 작성 예시 이미지 */
+    .example-box {
+      margin-top: 16px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 16px;
+      border: 3px dashed #81C784;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .example-frame {
+      width: 100%;
+      max-width: 760px;
+      height: 360px;
+      border-radius: 12px;
+      background: #F1F8E9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 2px solid #AED581;
+    }
+
+    .example-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .slide-btn {
+      background: #FFAB91;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 2px 2px 0 #D84315;
+    }
+
+    .slide-btn:active {
+      box-shadow: none;
+      transform: translateY(2px);
+    }
+
+    .more-info {
+      background: white;
+      border-radius: 14px;
+      padding: 16px 20px;
+      border: 2px solid #4FC3F7;
+    }
+
+    .more-info li {
+      margin-bottom: 6px;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 1.05rem;
+    }
+
+    .more-info a {
+      color: #0288D1;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .more-info a:hover {
+      text-decoration: underline;
+    }
+
+    .worksheet {
+      background: #FAFAFA;
+      border: 3px dashed #BA68C8;
+      border-radius: 16px;
+      padding: 20px;
+      white-space: pre-wrap;
+      margin-top: 16px;
+      margin-top: 16px;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .note {
+      font-size: 1rem;
+      color: #757575;
+      margin-top: 8px;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <a href="index.html" class="home-btn" title="메인으로 돌아가기">🏠</a>
+  <header>
+    <h1>14가지 독서전략</h1>
+    <p>
+      <strong>독서전략은 왜 가르쳐야 할까요?</strong><br>
+      읽기는 모든 교과 학습의 바탕이자, 자연스럽게 익혀지는 능력이 아니라 <strong>'가르쳐야 할 기술'</strong>이에요.<br>
+      적절한 독서전략을 학습 과제 해결에 계속적으로 대입해서 연습하다 보면<br>
+      “다 읽었는데 무슨 내용인지 잘 모르겠어요.”라고 말하던 학생들이<br>
+      “여기서 중요한 건 이거 같아요.”, “앞에서 나온 내용이랑 연결돼요.”라고 말할 수 있어요.
+    </p>
+  </header>
+
+  <main>
+
+    <nav id="menu"></nav>
+
+    <section>
+      <h2 id="title"></h2>
+
+      <div class="definition" id="definition"></div>
+      <div class="source" id="source"></div>
+
+      <h3 class="section-title" id="exampleTitle">✏️ 작성 예시</h3>
+      <div class="example-box" id="exampleBox">
+        <button class="slide-btn" id="prevBtn">‹</button>
+
+        <div class="example-frame">
+          <img id="exampleImage" class="example-image" alt="작성 예시 이미지">
+        </div>
+
+        <button class="slide-btn" id="nextBtn">›</button>
+      </div>
+
+      <h3 class="section-title">📚 더 알고 싶어요!</h3>
+      <div class="more-info" id="more"></div>
+
+      <h3 class="section-title">🧑‍🏫 수업에 이렇게 활용해요</h3>
+      <div class="worksheet" id="worksheet"></div>
+      <div class="note">*드래그해서 복사해 활동지로 활용하세요.*</div>
+
+    </section>
+  </main>
+
+  <script>
+    const strategies = [
+
+      /* ① 예측 안내하기 */
+      {
+        name: "예측 안내하기",
+        definition:
+          "예측 안내하기는 제목, 표지, 차례, 소제목, 그림 같은 ‘단서’를 먼저 살펴보고 글의 내용을 미리 짐작해 보는 전략이에요. " +
+          "아이들은 예측을 세우면 읽는 동안 ‘확인해야 할 목표’가 생겨서, 집중이 훨씬 잘 돼요. " +
+          "또 예측이 빗나가도 괜찮아요. 읽으며 예측을 수정하는 과정 자체가 이해를 깊게 만들어 주기 때문이에요.",
+        source: "독서 전략(예측) 수업 사례 자료",
+        exampleImages: [
+          "https://blog.tcea.org/wp-content/uploads/2023/11/Screen-Shot-2023-11-01-at-12.11.32-PM.png",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk22qfvwVILAZotoe9RKQ_tzzWxdJvGzxbCg&s"
+        ],
+        more: [
+          ["예측하며 읽기-읽기 전 예측 요소(유튜브)",
+            "https://www.youtube.com/watch?v=bGj0GhF60UI"],
+          ["예측하며 읽으면 생각이 쑥쑥(칼럼)",
+            "https://www.hani.co.kr/arti/society/schooling/281545.html"],
+          ["읽기 전략: Previewing(사전 보기) 소개(Libretexts)",
+            "https://human.libretexts.org/Courses/City_College_of_San_Francisco/Writing_Reading_and_College_Success%3A_A_First-Year_Composition_Course_for_All_Learners_(Kashyap_and_Dyquisto)/03%3A_The_Reading-Writing_Connection/3.03%3A_Reading_Strategies_-_Previewing"]
+        ],
+        worksheet:
+          `[예측 안내하기 활동 예시]
+
+1) (읽기 전) 제목·표지·그림·차례를 30초~1분 동안 조용히 살펴봐요.
+2) ‘이 글은 아마 ○○일 거예요.’처럼 예측 문장을 2개 써요.
+3) 예측의 근거(단서)를 표시해요. (예: 제목의 낱말, 그림의 장면, 소제목)
+4) (읽기 중) 문단마다 ‘예측이 맞는지’ 체크표(○/△/×)로 표시해요.
+5) (읽기 중) 예측이 틀렸다면, 어떤 정보 때문에 수정했는지 한 문장으로 써요.
+6) (읽기 후) 최종 결론: ‘처음 예측 → 최종 이해’가 어떻게 바뀌었는지 정리해요.`
+      },
+
+      /* ② 브레인스토밍 */
+      {
+        name: "브레인스토밍",
+        definition:
+          "브레인스토밍은 읽기 전에 주제와 관련된 생각·경험·단어를 자유롭게 꺼내 놓는 전략이에요. " +
+          "배경지식을 먼저 ‘활성화’하면, 글에서 새로운 정보가 나와도 연결할 고리가 생겨서 이해가 쉬워져요. " +
+          "또 모둠으로 하면 친구의 생각을 들으며 관점이 넓어지고, 읽기 동기도 같이 올라가요.",
+        source: "독서 전(배경지식 활성화) 수업 자료",
+        exampleImages: [
+          "https://s1.ihalla.com/view_img.php?gimg=202008/690016.jpg",
+          "http://www.slj.co.kr/data/cheditor4/1807/1686a62f8e57917e1c5267d77d03e8ac_1530498746.07.png"
+        ],
+        more: [
+          ["초등학생의 다양한 브레인스토밍 방법(유튜브)",
+            "https://www.youtube.com/watch?v=_SByNRRqdw8"],
+          ["브레인스토밍(다음백과)",
+            "https://100.daum.net/encyclopedia/view/61XX80000023"],
+          ["[수업자료]브레인스토밍(내일은쌤)",
+            "https://imssam.me/story/story_detail.php?sq=110"]
+        ],
+        worksheet:
+          `[브레인스토밍 활동 예시]
+
+1) (읽기 전) 주제를 칠판/화면 가운데에 크게 적어요.
+2) 1분 동안 ‘생각나는 단어’를 제한 없이 적어요. (맞춤법·정답 걱정 금지!)
+3) 비슷한 단어끼리 묶어서 ‘범주 이름’을 붙여요. (예: 원인/감정/사건/장소)
+4) 각 범주에서 ‘가장 궁금한 질문’ 1개씩 만들어요.
+5) (읽기 중) 글에서 답을 찾으면 밑줄 + 메모로 체크해요.
+6) (읽기 후) 처음 단어 중 ‘수정/추가/삭제’할 것에 표시하고, 배운 점을 2문장으로 정리해요.`
+      },
+
+      /* ③ SQ3R */
+      {
+        name: "SQ3R",
+        definition:
+          "SQ3R은 ‘훑어보기(Survey)–질문하기(Question)–읽기(Read)–말하기(Recite)–복습하기(Review)’의 5단계 독서 전략이에요. " +
+          "순서를 따라가면 ‘읽기 목표’가 분명해져서, 그냥 읽을 때보다 핵심을 더 잘 붙잡을 수 있어요. " +
+          "특히 시험 대비나 설명문/정보글처럼 구조가 있는 글을 읽을 때 효과가 좋아요.",
+        source: "학습 독서(SQ3R) 전략 자료",
+        exampleImages: [
+          "https://worksheets.clipart-library.com/images2/sq3r-reading-worksheet/sq3r-reading-worksheet-0.png",
+          "https://mathematicstrategies.weebly.com/uploads/5/2/9/1/52913467/8594215_orig.jpg"
+        ],
+        more: [
+          ["SQ3R 학습기법(유튜브)",
+            "https://www.youtube.com/watch?v=2AXH_8XiwZ8"],
+          ["SQ3R 전략으로 학습력 키우기(티스토리)",
+            "https://keewi-t.tistory.com/entry/%EB%98%91%EB%98%91%ED%95%9C-%EC%84%A0%EC%83%9D%EB%8B%98-SQ3R-%EC%A0%84%EB%9E%B5%EC%9C%BC%EB%A1%9C-%ED%95%99%EC%8A%B5%EB%A0%A5-%ED%82%A4%EC%9A%B0%EB%8A%94-%EB%B2%95"],
+          ["SQ3R 개념(위키백과)",
+            "https://en.wikipedia.org/wiki/SQ3R"]
+        ],
+        worksheet:
+          `[SQ3R 활동 예시]
+
+1) Survey(훑어보기): 제목·차례·소제목·그림·요약문을 1~2분 훑어요.
+2) Question(질문하기): ‘왜? 어떻게? 무엇을?’ 질문을 3개 만들어요.
+3) Read(읽기): 질문의 답을 찾으며 읽고, 답이 있는 문장에 표시해요.
+4) Recite(말하기): 책을 덮고 ‘핵심 3가지’를 말로 설명해요(또는 짧게 적어요).
+5) Review(복습): 표시한 부분을 다시 보며, 질문 3개의 답을 정리해요.
+6) 확장: 오늘 글의 핵심을 ‘한 문장 요약’으로 완성해요.`
+      },
+
+      /* ④ 마인드맵 */
+      {
+        name: "마인드맵",
+        definition:
+          "마인드맵은 하나의 중심 생각에서 출발해 가지를 뻗으며 내용을 정리하는 독서전략이에요. " +
+          "핵심 개념과 세부 내용을 시각적으로 연결해서, 글의 구조와 중요도를 한눈에 파악하도록 도와줘요. " +
+          "특히 ‘왜 연결되는지’를 스스로 설명하게 하면, 단순 정리를 넘어 이해가 깊어지는 장점이 있어요.",
+        source: "마인드맵 독서정리 수업 자료",
+        exampleImages: [
+          "https://velog.velcdn.com/images/dahunyoo/post/12d74aed-2713-4e13-a015-848b49fbb965/image.png",
+          "https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202012/08/fdd412ae-cca0-4ce5-b94f-94655d0b53df.jpg",
+          "https://cdn.dongponews.net/news/photo/201605/31478_34967_3526.jpg"
+        ],
+        more: [
+          ["토니 부잔 마인드맵(유튜브)",
+            "https://www.youtube.com/watch?v=WiJbhs9uXps"],
+          ["무료 마인드맵 도구 추천(티스토리)",
+            "https://coconx.tistory.com/485"],
+          ["마인드맵 개념(위키백과)",
+            "https://en.wikipedia.org/wiki/Mind_map"]
+        ],
+        worksheet:
+          `[마인드맵 활동 예시]
+
+1) 글의 중심 주제를 가운데에 적고, 색/도형으로 강조해요.
+2) 문단을 읽으며 ‘큰 가지(핵심 범주)’를 3~5개 정해 뻗어요.
+3) 각 큰 가지에 ‘세부 가지’를 핵심어(명사 중심)로 2~4개씩 붙여요.
+4) 서로 연결되는 가지는 선(→)으로 이어서 관계를 표시해요. (원인-결과/비교/예시 등)
+5) 가장 중요하다고 생각한 가지에 ★ 표시하고, 근거 문장을 찾아 적어요.
+6) 완성 후 짝과 교환해서 “내 마인드맵을 30초 설명”해 보고, 빠진 가지를 보완해요.`
+      },
+
+      /* ⑤ 캐릭터 차트 */
+      {
+        name: "캐릭터 차트",
+        definition:
+          "캐릭터 차트는 이야기 속 인물의 ‘말·행동·생각·감정’을 근거로 성격과 변화를 정리하는 전략이에요. " +
+          "‘인물이 왜 그런 선택을 했는지’를 따져 보게 해서, 사건 이해가 더 깊어져요. " +
+          "특히 갈등–전환–결말이 있는 문학 텍스트에서 주제 파악에 큰 도움이 돼요.",
+        source: "문학 독서(인물 분석) 수업 자료",
+        exampleImages: [
+          "https://livinglovinglearningaswego.com/wp-content/uploads/2017/05/Character-Chart.png",
+          "https://www.weareteachers.com/wp-content/uploads/character-traits-anchor-charts-feelings-dialogue-actions-thoughts.jpg"
+        ],
+        more: [
+          ["캐릭터 분석(감정/행동/대사) 예시 자료(WeAreTeachers)",
+            "https://www.weareteachers.com/character-traits-anchor-charts/"],
+          ["캐릭터 분석 앵커 차트(buzzingwithmsb)",
+            "https://buzzingwithmsb.com/2023/02/character-analysis-anchor-charts-six.html?srsltid=AfmBOoowRU54ntwOAaNUy-zfhsRsyptip7n1SSevGGMRPx9NovuIAX1G"]
+        ],
+        worksheet:
+          `[캐릭터 차트 활동 예시]
+
+1) 인물 이름을 쓰고, 작품에서 ‘첫 등장’ 장면을 표시해요.
+2) 인물의 대사/행동 3개를 근거로 적어요. (페이지/문장 표시)
+3) 그 근거를 바탕으로 성격을 2~3개 형용사로 정리해요.
+4) 이야기 중반의 ‘변화 사건(전환점)’을 찾아, 그때의 감정과 선택을 적어요.
+5) 결말에서 인물이 어떻게 달라졌는지 ‘전-후 비교’로 정리해요.
+6) 마지막으로 “이 인물의 변화가 주제와 어떻게 연결되는지” 한 문장으로 써요.`
+      },
+
+      /* ⑥ 앙케이트/질문표 */
+      {
+        name: "앙케이트/질문표",
+        definition:
+          "앙케이트/질문표는 읽은 내용에 대해 질문에 답하거나, 의견을 체크하며 이해를 점검하는 전략이에요. " +
+          "교사가 질문을 주면 ‘핵심을 다시 찾는 읽기’가 되고, 학생이 질문을 만들면 ‘생각을 확장하는 읽기’가 돼요. " +
+          "또 모둠별로 질문을 공유하면 서로 다른 해석을 자연스럽게 비교할 수 있어요.",
+        source: "독서 질문지·설문 활동 자료",
+        exampleImages: [
+          "https://image.yes24.com/blogimage/blog/o/n/on7907/G0Qn6tbyi1OtCCIZ.jpeg",
+          "https://sojoong.joins.com/wp-content/uploads/sites/4/2020/04/batch_yis1584.png"
+        ],
+        more: [
+          ["독서 질문카드 활용법(티스토리)",
+            "https://eduhope88.tistory.com/412"],
+          ["설문 조사하기(앙케트) 독서활동 예시(글나라)",
+            "https://www.gulnara.net/index.php?pknv=10&uid=251&zact=viewboard&zapp=board&zsect=reading"],
+          ["구글폼 설문지 만들기(티스토리)",
+            "https://han8849.tistory.com/20"]
+        ],
+        worksheet:
+          `[앙케이트/질문표 활동 예시]
+
+1) (읽기 전) 오늘 글의 주제에 대해 ‘의견 체크 문항’ 3개를 먼저 답해요. (동의/보통/비동의)
+2) (읽기 중) ‘사실 확인 질문’ 3개에 답이 되는 문장을 표시해요.
+3) (읽기 중) ‘이유/근거 질문’ 2개를 만들어 모둠원과 교환해요.
+4) (읽기 후) 의견 체크 문항을 다시 답하고, 읽기 전과 달라진 항목에 표시해요.
+5) ‘내 생각이 바뀐 이유’를 글 속 근거 1개 + 내 경험 1개로 설명해요.
+6) 모둠에서 가장 좋은 질문 1개를 뽑아 전체 공유해요.`
+      },
+
+      /* ⑦ KWL */
+      {
+        name: "KWL",
+        definition:
+          "KWL은 ‘K(이미 알고 있는 것)–W(알고 싶은 것)–L(새로 알게 된 것)’을 표로 정리하는 전략이에요. " +
+          "학생이 스스로 질문(W)을 세우기 때문에, 읽기가 ‘목표 있는 탐색’이 돼요. " +
+          "읽은 뒤 L을 채우며 학습을 정리하고, 다음 탐구로 이어지는 질문을 남길 수 있어요.",
+        source: "KWL 읽기 전략 수업 자료",
+        exampleImages: [
+          "https://katierener.weebly.com/uploads/7/6/9/0/7690393/8913583_orig.jpg?0",
+          "https://s1.ihalla.com/fimg.php?gimg=202009/691091-0.jpg&pos=BR"
+        ],
+        more: [
+          ["KWL 읽기 전략 수업 적용(티스토리)",
+            "https://edugalaxy.tistory.com/322"],
+          ["KWL 소개 글(독서전략 개요 포함, 티스토리)",
+            "https://firebird.tistory.com/556"],
+          ["KWL 개념(위키백과: 개요)",
+            "https://en.wikipedia.org/wiki/KWL_table"]
+        ],
+        worksheet:
+          `[KWL 활동 예시]
+
+1) (읽기 전) K칸에 주제에 대해 이미 알고 있는 내용을 3개 적어요.
+2) (읽기 전) W칸에 ‘알고 싶은 질문’을 3개 적어요.
+3) (읽기 중) 질문의 답이 보이면 밑줄 + 페이지 표시를 해요.
+4) (읽기 후) L칸에 새로 알게 된 내용을 3개 이상 적어요.
+5) ‘가장 중요한 배움 1개’를 골라, 왜 중요한지 2문장으로 설명해요.
+6) 남은 궁금증(추가 질문) 1개를 만들어 다음 학습으로 연결해요.`
+      },
+
+      /* ⑧ 요약기법 */
+      {
+        name: "요약기법",
+        definition:
+          "요약기법은 글의 핵심 내용을 골라 ‘짧고 정확하게’ 다시 말하는 독서전략이에요. " +
+          "요약을 하려면 중요한 정보와 덜 중요한 정보를 구분해야 해서, 자연스럽게 핵심 파악 능력이 길러져요. " +
+          "또 자기 말로 바꾸어 쓰는 과정에서 이해가 점검되고, 기억에도 오래 남게 돼요.",
+        source: "독서 요약 지도 자료",
+        exampleImages: [
+          "https://img.stibee.com/37995_1621339385.png",
+          "https://mblogthumb-phinf.pstatic.net/MjAyNDA4MzBfMTY1/MDAxNzI1MDIxOTczNzYy.QGMwkfq6n1wWDHWvQ2kfU57_Fp2iOWi5bTZ2Y6nRywUg.4KEDhAAH4AZePU2TO_8Xm83WuetBTsVGQMKzxVR6OQMg.PNG/image.png?type=w800"
+        ],
+        more: [
+          ["요약의 기본 흐름/원칙 정리(티스토리)",
+            "https://bookpencil.tistory.com/48"],
+          ["책 요약 정리 방법(티스토리)",
+            "https://greatg.tistory.com/entry/%EC%B1%85%EC%9D%84-%EA%B3%A0-%EC%9A%94%EC%95%BD%ED%95%98%EA%B3%A0-%EC%A0%95%EB%A6%AC%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95-%EC%9C%A0%ED%8A%9C%EB%B2%84-%EA%B2%A8%EC%9A%B8%EC%84%9C%EC%A0%90"],
+          ["Summarization 개념(위키백과)",
+            "https://en.wikipedia.org/wiki/Summary"]
+        ],
+        worksheet:
+          `[요약기법 활동 예시]
+
+1) 글을 끝까지 읽고, 문단마다 ‘핵심어 1개’를 골라 적어요.
+2) 각 문단의 핵심어를 연결해 ‘핵심 문장(요지)’을 1문장으로 만들어요.
+3) 글의 목적(설명/주장/비교/문제-해결)을 표시하고, 그에 맞게 요약 틀을 정해요.
+4) ‘가장 중요한 근거/예시’ 2개만 남기고 나머지는 과감히 줄여요.
+5) 내 말로 다시 써요. (원문 문장 복붙 금지!)
+6) 마지막으로 “이 요약은 원문을 왜곡하지 않았나요?” 체크하고 1번 더 다듬어요.`
+      },
+
+      /* ⑨ 그래픽조직자 */
+      {
+        name: "그래픽조직자",
+        definition:
+          "그래픽조직자는 글의 구조를 표·도식·그림으로 바꾸어 정리하는 독서전략이에요. " +
+          "원인-결과, 비교-대조, 문제-해결, 시간 순서처럼 구조가 보이면 이해가 훨씬 쉬워져요. " +
+          "특히 설명문/기사문/사회·과학 텍스트에서 ‘핵심 관계’를 잡는 데 강력해요.",
+        source: "그래픽 조직자 독서활동 자료",
+        exampleImages: [
+          "https://www.edrawsoft.com/templates/images/compare-contrast.png"
+        ],
+        more: [
+          ["독후활동지/그래픽조직자 활용(티스토리)",
+            "https://anywherelibrary.tistory.com/19"],
+          ["그래픽 조직자(개념 소개, 위키백과)",
+            "https://en.wikipedia.org/wiki/Graphic_organizer"],
+          ["교과서 공부 이렇게 하면 쉬워진다-그래픽조직자로",
+            "https://www.youtube.com/watch?v=0unBzOVlq6g"]
+        ],
+        worksheet:
+          `[그래픽조직자 활동 예시]
+
+1) 글을 훑어보고 ‘구조 유형’을 먼저 고르세요.
+   □ 원인–결과 □ 비교–대조 □ 문제–해결 □ 시간 순서
+2) 구조에 맞는 빈 조직자 틀(표/도식)을 화면에 띄우거나 종이에 준비해요.
+3) 문단을 읽으며 ‘핵심 정보’를 해당 칸에 짧은 핵심어로 채워요.
+4) 칸과 칸의 관계를 화살표/기호(=, ≠, →)로 표시해요.
+5) 완성 후, 조직자를 보면서 글을 30초 안에 말로 설명해요.
+6) 마지막으로 “이 구조에서 가장 중요한 칸 1개”에 ★ 표시하고 근거 문장을 적어요.`
+      },
+
+      /* ⑩ QAR */
+      {
+        name: "QAR",
+        definition:
+          "QAR은 질문의 답이 ‘글 속에 바로 있는지’, ‘여러 부분을 합쳐야 하는지’, ‘글+내 생각이 필요한지’를 구분하는 전략이에요. " +
+          "아이들이 ‘아무 질문이나 답 찾기’에서 벗어나, 질문의 성격을 판단하며 읽게 돼요. " +
+          "그래서 독해가 깊어지고, 서술형·논술형 질문에도 훨씬 강해질 수 있어요.",
+        source: "QAR 독해 전략 자료",
+        exampleImages: [
+          "https://comprehensionbarbpeterson.weebly.com/uploads/5/5/7/6/55767107/6253675_orig.jpg",
+          "https://img.khan.co.kr/news/2012/10/08/khan_Uv0JFc.webp"
+        ],
+        more: [
+          ["QAR 읽기 전략(유튜브)",
+            "https://www.youtube.com/watch?v=rd5VOv0908Y"],
+          ["Reading Strategy Instruction — QAR(Reading Rockets)",
+            "https://www.readingrockets.org/videos/classroom/reading-strategy-instruction-qar"],
+          ["스스로 질문하고 답하게 하자: QAR 질문 전략(칼럼)",
+            "https://www.khan.co.kr/article/201210082056485"]
+        ],
+        worksheet:
+          `[QAR 활동 예시]
+
+1) 글을 읽기 전, 교사가 제시한 질문 3개를 ‘유형별로’ 분류해요.
+2) (읽기 중) 각 질문에 답이 되는 문장/단서를 표시해요.
+3) 분류 기준을 적용해요:
+   - Right There(글 속에 바로)
+   - Think & Search(여러 부분 종합)
+   - Author & You(글+내 생각)
+   - On My Own(내 경험 중심)
+4) 질문마다 ‘답의 근거’를 1개 이상 적어요. (문장/문단 표시)
+5) 모둠에서 서로의 분류가 다른 질문 1개를 골라 토론해요.
+6) 마지막으로 학생이 질문 1개를 새로 만들고, 그 질문의 유형도 스스로 분류해요.`
+      },
+
+      /* ⑪ 이야기지도 */
+      {
+        name: "이야기지도",
+        definition:
+          "이야기지도는 이야기의 인물·배경·사건·갈등·해결을 한 장의 구조로 정리하는 전략이에요. " +
+          "줄거리만 나열하는 것이 아니라 ‘왜 사건이 그렇게 흘렀는지’를 관계로 보게 해줘요. " +
+          "그래서 주제와 인물의 변화까지 자연스럽게 연결해 이해할 수 있어요.",
+        source: "서사(Story map) 독서활동 자료",
+        exampleImages: [
+          "http://cdn.files.3rdl.com/129018/file.ashx",
+          "https://yearfoursblog.wordpress.com/wp-content/uploads/2014/10/2014-10-03-17-34-56.jpg"
+        ],
+        more: [
+          ["How to Create a Story Map for Kids(유튜브)",
+            "https://www.youtube.com/watch?v=lcD6ijirN2g"],
+          ["이야기 글 읽기/구조 활용(티스토리)",
+            "https://barefootsong.tistory.com/18"],
+          ["Story map 개념(위키백과)",
+            "https://en.wikipedia.org/wiki/Story_map"]
+        ],
+        worksheet:
+          `[이야기지도 활동 예시]
+
+1) 인물(주인공/조력자/대립자)을 구분해 적어요.
+2) 배경(언제/어디서/분위기)을 근거 문장과 함께 적어요.
+3) 사건을 ‘처음–중간–끝’ 3단계로 나눠 핵심 사건만 적어요.
+4) 갈등(문제)을 한 문장으로 요약하고, 원인이 무엇인지 표시해요.
+5) 해결(결말)에서 인물이 무엇을 선택했고, 그 결과가 무엇인지 적어요.
+6) 마지막으로 “이야기가 말하는 주제(메시지)”를 1문장으로 써요.`
+      },
+
+      /* ⑫ 생각 말하기 */
+      {
+        name: "생각 말하기",
+        definition:
+          "생각 말하기(Think-aloud)는 읽는 동안 떠오르는 생각을 ‘말로 밖에 꺼내며’ 이해 과정을 점검하는 전략이에요. " +
+          "아이들은 ‘모르는 것을 모른다’는 상태에 빠지기 쉬운데, 생각을 말하면 막히는 지점이 바로 보이기 시작해요. " +
+          "교사는 학생의 사고 흐름을 관찰하며 즉시 피드백을 줄 수 있어서, 독해 지도에 매우 좋아요.",
+        source: "Think-aloud 독서 지도 자료",
+        exampleImages: [
+          "https://strategiesforspecialinterventions.weebly.com/uploads/3/8/7/5/38759681/_2715694.jpg?362",
+          "https://images.twinkl.co.uk/tw1n/image/private/t_1600/image_repo/e5/c6/T2-E-1621-Features-of-Reading-Aloud-and-Performance-Checklist_ver_1.avif"
+        ],
+        more: [
+          ["책 잘 읽는 연습 Think aloud(유튜브)",
+            "https://www.youtube.com/watch?v=Hjj7yR81rWI"],
+          ["think-aloud 독서 실험/설명(티스토리)",
+            "https://booksreview.tistory.com/14"],
+          ["소리내어 생각하기(strategiesforspecialinterventions)",
+            "https://strategiesforspecialinterventions.weebly.com/think-alouds.html"],
+          ["Think-aloud 소리내어 생각하기(티스토리)",
+            "https://kimmyfly.tistory.com/entry/Think-Aloud-%EC%86%8C%EB%A6%AC%EB%82%B4%EC%96%B4-%EC%83%9D%EA%B0%81%ED%95%98%EA%B8%B0"]
+        ],
+        worksheet:
+          `[생각 말하기 활동 예시]
+
+1) 교사가 먼저 시범을 보여요. (예: “어? 이 단어는 무슨 뜻이지?”)
+2) 학생에게 ‘말하기 문장틀’을 줘요:
+   - 나는 지금 ○○라고 생각해요.
+   - 근거는 ○○예요.
+   - 여기서 궁금한 점은 ○○예요.
+3) 학생이 한 문단을 읽고, 30초 동안 생각을 말해요(짝이 기록).
+4) 짝은 ‘표시 카드’로 체크해요: 이해/추론/질문/어휘/연결.
+5) 역할을 바꿔 다시 진행하고, 서로 가장 좋은 ‘생각 말하기’ 1개를 골라요.
+6) 마지막에 “내가 막힌 지점과 해결 방법”을 한 문장으로 정리해요.`
+      },
+
+      /* ⑬ 건너뛰며 읽기(스캐닝) */
+      {
+        name: "건너뛰며 읽기",
+        definition:
+          "건너뛰며 읽기(스캐닝)는 글 전체를 꼼꼼히 읽기보다, 필요한 정보가 있는 부분만 찾아 집중해서 읽는 전략이에요. " +
+          "예를 들어 날짜, 인물, 수치, 정의처럼 ‘찾아야 하는 목표 정보’가 뚜렷할 때 특히 유용해요. " +
+          "정보 탐색이 빨라지면 학습 부담이 줄고, 핵심 정보의 정확도도 오히려 올라가요.",
+        source: "Scanning(정보 탐색) 읽기 전략 자료",
+        exampleImages: [
+          "https://dsvo5gka2lbbo.cloudfront.net/thumbnails/uploads/2024/07/Scanning-Reading-Strategy-Worksheets-Top-Teacher-600x600.jpg",
+          "https://worksheets.clipart-library.com/images2/scanning-worksheet/scanning-worksheet-18.jpg"
+        ],
+        more: [
+          ["스캐닝과 스키밍 차이(티스토리)",
+            "https://shinyababy.tistory.com/entry/%EC%8A%A4%EC%BA%90%EB%8B%9D%EA%B3%BC-%EC%8A%A4%ED%82%A4%EB%B0%8D"],
+          ["Skimming & Scanning 리딩전략(티스토리)",
+            "https://parang0309.tistory.com/157"],
+          ["Scanning 개념(위키백과)",
+            "https://en.wikipedia.org/wiki/Scanning_(reading)"]
+        ],
+        worksheet:
+          `[건너뛰며 읽기 활동 예시]
+
+1) ‘찾을 정보 목표’를 먼저 정해요. (예: 원인 2개, 결과 2개, 핵심 수치 3개)
+2) 글에서 목표 정보가 나올 법한 ‘신호’를 정해요. (굵은 글씨/숫자/소제목/표)
+3) 눈으로 빠르게 훑으며 신호를 찾고, 해당 문장에만 밑줄을 그어요.
+4) 밑줄 문장 옆에 ‘한 단어 메모’를 붙여요. (원인/결과/정의/예시 등)
+5) 찾은 정보를 표로 정리하고, 근거 문장(어느 문단인지)을 함께 적어요.
+6) 마지막으로 “내가 찾은 정보로 글의 핵심을 한 문장” 만들어 봐요.`
+      },
+
+      /* ⑭ 훑어 읽기(스키밍) */
+      {
+        name: "훑어 읽기",
+        definition:
+          "훑어 읽기(스키밍)는 글 전체를 빠르게 살피며 ‘대략적인 주제와 흐름’을 잡는 전략이에요. " +
+          "제목, 소제목, 문단의 첫 문장, 강조 표시된 부분을 중심으로 읽어서 전체 구조를 먼저 머리에 넣어요. " +
+          "이렇게 큰 그림을 잡으면 이후 정독할 때 길을 잃지 않고, 중요한 부분에 더 집중할 수 있어요.",
+        source: "Skimming(개요 파악) 읽기 전략 자료",
+        exampleImages: [
+          "https://shaomaprep.com/wp-content/uploads/2024/04/image-73.png",
+          "https://images.twinkl.co.uk/tw1n/image/private/s--Ad2YYoVy--/e_sharpen:100,q_auto:eco,w_1260/image_repo/a3/ce/cfe-l-52554-scottish-history-skimming-and-scanning-activity-sheet_ver_1.webp",
+          "https://www.eslprintables.com/previews/437471_1-Skimming.jpg"
+        ],
+        more: [
+          ["스키밍이란 무엇인가요?(speako.club)",
+            "https://speako.club/english-reading-skills/skimming-what-is"],
+          ["독서 기술 7가지(스키밍 설명 포함, 티스토리)",
+            "https://moneyfactory99.tistory.com/8"],
+          ["Skimming 개념(위키백과)",
+            "https://en.wikipedia.org/wiki/Skimming_(reading)"]
+        ],
+        worksheet:
+          `[훑어 읽기 활동 예시]
+
+1) 제목·소제목·차례를 먼저 보고, 글의 주제를 1문장으로 추측해요.
+2) 각 문단의 첫 문장만 읽으며 ‘문단의 역할’을 메모해요. (설명/예시/주장/결론)
+3) 굵은 글씨·표·그림 캡션을 확인해 핵심 키워드를 5개 뽑아요.
+4) 글 전체의 흐름을 ‘3줄 요약’으로 먼저 만들어 봐요.
+5) 정독이 필요한 부분(어려운 문단/핵심 문단)을 표시하고, 읽기 계획을 세워요.
+6) 마지막으로 “훑어 읽기 후 내 예상 주제 vs 정독 후 주제”를 비교해 정리해요.`
+      }
+
+    ];  // ✅ 배열 닫기 (딱 한 번!)
+
+    /* ===== 이미지 캐러셀 + 화면 동작 ===== */
+    const menu = document.getElementById("menu");
+    const title = document.getElementById("title");
+    const definition = document.getElementById("definition");
+    const source = document.getElementById("source");
+    const more = document.getElementById("more");
+    const worksheet = document.getElementById("worksheet");
+
+    const exampleBox = document.getElementById("exampleBox");
+    const exampleImage = document.getElementById("exampleImage");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    let currentImages = [];
+    let imgIndex = 0;
+
+    function renderImage() {
+      if (!currentImages || currentImages.length === 0) {
+        exampleBox.style.display = "none";
+        return;
+      }
+      exampleBox.style.display = "flex";
+      exampleImage.src = currentImages[imgIndex];
+    }
+
+    prevBtn.onclick = () => {
+      imgIndex = (imgIndex - 1 + currentImages.length) % currentImages.length;
+      renderImage();
+    };
+    nextBtn.onclick = () => {
+      imgIndex = (imgIndex + 1) % currentImages.length;
+      renderImage();
+    };
+
+    strategies.forEach(s => {
+      const b = document.createElement("button");
+      b.textContent = s.name;
+      b.onclick = () => {
+        title.textContent = s.name;
+        definition.textContent = s.definition;
+        source.textContent = "출처: " + s.source;
+
+        // 이미지
+        currentImages = s.exampleImages || [];
+        imgIndex = 0;
+        renderImage();
+
+        // 더 알고 싶어요
+        if (s.more && s.more.length > 0) {
+          more.innerHTML = "<ul>" + s.more.map(m =>
+            `<li>${m[0]} → <a href="${m[1]}" target="_blank" rel="noopener">관련 자료 바로가기</a></li>`
+          ).join("") + "</ul>";
+        } else {
+          more.innerHTML = "";
+        }
+
+        worksheet.textContent = s.worksheet;
+      };
+      menu.appendChild(b);
+    });
+
+    // 첫 화면: 1번 전략 자동 표시
+    menu.firstChild.click();
+  </script>
+
+</body>
+
+</html>

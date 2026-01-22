@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>교육과정 지식 그래프 (Curriculum Knowledge Graph)</title>
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Vis.js -->
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <link href="style.css" rel="stylesheet">
+    <style>
+        /* Modern Glassmorphism Styles for Mapping Graph */
+
+        body {
+            /* Inherit background from style.css */
+            overflow: hidden;
+            width: 100%;
+            height: 100dvh;
+            /* Mobile friendly height */
+        }
+
+        /* Container */
+        #mynetwork {
+            width: 100%;
+            height: 100%;
+            border: none;
+            cursor: grab;
+            outline: none;
+        }
+
+        #mynetwork:active {
+            cursor: grabbing;
+        }
+
+        /* Overlays (Glassmorphism) */
+        .overlay {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            color: var(--secondary-color);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+        }
+
+        /* Header */
+        header.overlay {
+            top: 20px;
+            left: 80px;
+            max-width: 400px;
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            margin: 0;
+            color: #2D3748;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        p.subtitle {
+            margin: 8px 0 0 0;
+            font-size: 0.95rem;
+            color: #4A5568;
+            font-weight: 400;
+        }
+
+        /* Legend */
+        .legend {
+            bottom: 30px;
+            left: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #4A5568;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Details Panel */
+        .details-panel {
+            top: 20px;
+            right: 20px;
+            width: 340px;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+            transform: translateX(120%);
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.85);
+            /* Slightly more opaque */
+        }
+
+        .details-panel.active {
+            transform: translateX(0);
+        }
+
+        .details-panel h2 {
+            font-size: 1.4rem;
+            color: #2D3748;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+            padding-bottom: 12px;
+            margin: 0 0 20px 0;
+            letter-spacing: -0.5px;
+        }
+
+        .detail-row {
+            margin-bottom: 16px;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .detail-label {
+            font-size: 0.85rem;
+            color: #718096;
+            margin-bottom: 6px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-content {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #2D3748;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(0, 0, 0, 0.05);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            color: #4A5568;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+        }
+
+        .close-btn:hover {
+            background: rgba(0, 0, 0, 0.1);
+            color: #000;
+        }
+
+        /* Loading */
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+            color: #718096;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 16px 32px;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: opacity 0.5s;
+        }
+
+        /* Chatbot UI - Modern Floating */
+        .chat-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 64px;
+            height: 64px;
+            background: #FF7043;
+            /* Primary Color */
+            border-radius: 50%;
+            border: none;
+            box-shadow: 0 8px 20px rgba(255, 112, 67, 0.4);
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .chat-btn:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 12px 24px rgba(255, 112, 67, 0.5);
+        }
+
+        .chat-container {
+            position: fixed;
+            bottom: 110px;
+            right: 30px;
+            width: 380px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 24px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            z-index: 99;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            transform-origin: bottom right;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #FF7043, #FFAB91);
+            padding: 20px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #F8F9FA;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chat-message {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .bot-msg {
+            background: white;
+            color: #2D3748;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            border: 1px solid #E2E8F0;
+        }
+
+        .user-msg {
+            background: #FF7043;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-input-area {
+            padding: 16px;
+            background: white;
+            border-top: 1px solid #E2E8F0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            background: #F7FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 24px;
+            outline: none;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .chat-input:focus {
+            background: white;
+            border-color: #FF7043;
+            box-shadow: 0 0 0 3px rgba(255, 112, 67, 0.1);
+        }
+
+        .chat-send {
+            width: 44px;
+            height: 44px;
+            background: #FF7043;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            font-size: 1.2rem;
+        }
+
+        .chat-send:hover {
+            background: #F4511E;
+            transform: scale(1.05);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header.overlay {
+                left: 75px;
+                right: 20px;
+                padding: 16px;
+                background: rgba(255, 255, 255, 0.9);
+            }
+
+            h1 {
+                font-size: 1.2rem;
+            }
+
+            p.subtitle {
+                display: none;
+            }
+
+            .legend {
+                padding: 15px;
+                bottom: 20px;
+                left: 20px;
+                background: rgba(255, 255, 255, 0.9);
+            }
+
+            .legend-item {
+                font-size: 0.8rem;
+            }
+
+            .details-panel {
+                width: calc(100% - 40px);
+                left: 20px;
+                right: 20px;
+                top: 90px;
+                max-height: 60vh;
+            }
+
+            .chat-container {
+                width: calc(100% - 40px);
+                right: 20px;
+                left: 20px;
+                bottom: 100px;
+                height: 60vh;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="index.html" class="home-btn" title="메인으로 돌아가기">🏠</a>
+    <div class="background"></div>
+    <div id="loading" class="loading">Loading Graph...</div>
+
+    <header class="overlay">
+        <h1><span class="emoji">🗺️</span> 교육과정 맵핑 그래프</h1>
+        <p class="subtitle">사회과 성취기준-단원-내용 구조화</p>
+    </header>
+
+    <div class="overlay legend">
+        <div class="legend-item">
+            <div class="dot" style="background: #3B82F6;"></div><span class="emoji">🎯</span> 성취기준
+        </div>
+        <div class="legend-item">
+            <div class="dot" style="background: #0EA5E9;"></div><span class="emoji">📂</span> 소단원
+        </div>
+        <div class="legend-item">
+            <div class="dot" style="background: #10B981;"></div><span class="emoji">📝</span> 학습 내용
+        </div>
+        <div class="legend-item">
+            <div class="dot" style="background: #F59E0B;"></div><span class="emoji">🏃</span> 학습 활동
+        </div>
+        <div class="legend-item">
+            <div class="dot" style="background: #64748B;"></div><span class="emoji">🧩</span> 내용 요소
+        </div>
+    </div>
+
+    <div id="detailsPanel" class="overlay details-panel">
+        <button class="close-btn" onclick="closeDetails()">&times;</button>
+        <h2 id="detailTitle">Node Title</h2>
+        <div id="detailBody"></div>
+    </div>
+
+    <div id="mynetwork"></div>
+
+    <script type="text/javascript">
+        // 1. Data Definition (Parsed from mapping.ttl)
+        const dataEntities = {
+            // Achievement Standards
+            "Std_6sa03-01": { id: "Std_6sa03-01", type: "Standard", label: "[6사03-01]", fullText: "일상 사례에서 법의 의미와 역할을 이해하고, 헌법에 규정된 인권이 일상생활에서 구현되는 사례를 조사하여 인권 친화적 태도를 기른다.", source: "cite: 7" },
+            "Std_6sa03-02": { id: "Std_6sa03-02", type: "Standard", label: "[6사03-02]", fullText: "일상생활에서 인권이 침해되는 사례를 찾아 그 해결 방안을 탐색하고, 인권을 보호하는 활동에 참여한다.", source: "cite: 8" },
+
+            // Content Elements (Connecting Nodes)
+            "Elem_HR_Meaning": { id: "Elem_HR_Meaning", type: "Element", label: "인권의 의미", cat: "지식" },
+            "Elem_Const_HR": { id: "Elem_Const_HR", type: "Element", label: "헌법상 인권의 내용", cat: "지식" },
+            "Elem_Law_Meaning": { id: "Elem_Law_Meaning", type: "Element", label: "법의 의미와 역할", cat: "지식" },
+            "Elem_Law_Case": { id: "Elem_Law_Case", type: "Element", label: "법의 적용 사례", cat: "지식" },
+            "Elem_Org_Separation": { id: "Elem_Org_Separation", type: "Element", label: "권력 분립", cat: "지식" },
+            "Elem_Info_Analysis": { id: "Elem_Info_Analysis", type: "Element", label: "정보 수집 분석", cat: "기능" },
+            "Elem_HR_Resolution": { id: "Elem_HR_Resolution", type: "Element", label: "인권 문제 해결", cat: "기능" },
+            "Elem_Power_Inquiry": { id: "Elem_Power_Inquiry", type: "Element", label: "권력 분립 탐구", cat: "기능" },
+            "Elem_Compliance": { id: "Elem_Compliance", type: "Element", label: "준법 태도", cat: "가치" },
+            "Elem_Right_Responsibility": { id: "Elem_Right_Responsibility", type: "Element", label: "권리와 책임", cat: "가치" },
+            "Elem_HR_Friendly": { id: "Elem_HR_Friendly", type: "Element", label: "인권 친화적 태도", cat: "가치" },
+            "Elem_Critical_Attitude": { id: "Elem_Critical_Attitude", type: "Element", label: "비판적 태도", cat: "가치" },
+
+            // Sub Units & Contents
+            "SubUnit1": { id: "SubUnit1", type: "SubUnit", label: "1. 인권을 존중하는 삶", std: "Std_6sa03-02" },
+            "SubUnit2": { id: "SubUnit2", type: "SubUnit", label: "2. 인권 보장과 헌법", std: "Std_6sa03-01" },
+            "SubUnit3": { id: "SubUnit3", type: "SubUnit", label: "3. 법의 의미와 역할", std: "Std_6sa03-01" },
+        };
+
+        const contents = [
+            // SubUnit 1
+            { id: "Content1_1", subUnit: "SubUnit1", topic: "인권의 의미와 일상생활 속 인권", activity: "인권 하면 떠오르는 것 써보기, 누리고 있는 인권 써보기", links: ["Elem_HR_Meaning", "Elem_HR_Friendly"] },
+            { id: "Content1_2", subUnit: "SubUnit1", topic: "인권 신장을 위해 노력했던 옛 사람들", activity: "홍길동전 인권 문제 쓰기, 역사 신문 만들기", links: ["Elem_HR_Meaning", "Elem_Info_Analysis"] },
+            { id: "Content1_3", subUnit: "SubUnit1", topic: "생활 속 인권 보장 사례 및 실천 태도", activity: "인권 침해 사례 찾기, '에베레스트산 계단' 광고 분석", links: ["Elem_HR_Resolution", "Elem_HR_Friendly"] },
+            { id: "Content1_4", subUnit: "SubUnit1", topic: "통합 학습 활동 (인권)", activity: "우리 반 인권 선언 및 카드 만들기", links: ["Elem_HR_Friendly", "Elem_HR_Resolution"] },
+
+            // SubUnit 2
+            { id: "Content2_1", subUnit: "SubUnit2", topic: "헌법의 의미와 인권", activity: "헌법 속 인권 내용 찾기, 그림 그리기", links: ["Elem_Const_HR"] },
+            { id: "Content2_2", subUnit: "SubUnit2", topic: "인권 보장을 위한 헌법의 역할", activity: "학원 심야 교습 제한 의견 쓰기", links: ["Elem_Const_HR", "Elem_Info_Analysis"] },
+            { id: "Content2_3", subUnit: "SubUnit2", topic: "국민의 기본권 (평등/자유 등)", activity: "기본권 적용 사례 찾기", links: ["Elem_Const_HR", "Elem_Info_Analysis"] },
+            { id: "Content2_4", subUnit: "SubUnit2", topic: "국민의 의무", activity: "우리 가족의 생활 모습에서 의무 찾기", links: ["Elem_Right_Responsibility"] },
+            { id: "Content2_5", subUnit: "SubUnit2", topic: "권리와 의무의 관계", activity: "갈등 사례 기사 읽고 생각 쓰기", links: ["Elem_Right_Responsibility", "Elem_HR_Friendly"] },
+
+            // SubUnit 3
+            { id: "Content3_1", subUnit: "SubUnit3", topic: "법의 정의", activity: "법 관련 상황 찾기", links: ["Elem_Law_Meaning"] },
+            { id: "Content3_2", subUnit: "SubUnit3", topic: "생활 속 법 적용 사례", activity: "사례와 법 연결하기", links: ["Elem_Law_Case", "Elem_Info_Analysis"] },
+            { id: "Content3_3", subUnit: "SubUnit3", topic: "법의 역할", activity: "권리 침해/사회 질서 문제 역할놀이", links: ["Elem_Law_Meaning", "Elem_HR_Resolution"] },
+            { id: "Content3_4", subUnit: "SubUnit3", topic: "법을 준수하는 태도", activity: "준법 행동 쓰기, 캠페인 활동", links: ["Elem_Compliance"] },
+            { id: "Content3_5", subUnit: "SubUnit3", topic: "통합 학습 활동 (법)", activity: "정의의 신 표현하기, 법 제안하기", links: ["Elem_Compliance", "Elem_Law_Meaning"] }
+        ];
+
+        // 2. Build Graph Data
+        const nodes = [];
+        const edges = [];
+        const addedNodes = new Set();
+
+        function addNode(id, group, label, meta = {}) {
+            if (!addedNodes.has(id)) {
+                nodes.push({ id, group, label, ...meta });
+                addedNodes.add(id);
+            }
+        }
+
+        // Add Standard Nodes (Center)
+        Object.values(dataEntities).forEach(e => {
+            if (e.type === "Standard") {
+                addNode(e.id, "standard", e.label, {
+                    title: e.fullText,
+                    value: 40,
+                    font: { size: 18, color: '#1E3A8A', face: 'Noto Sans KR', strokeWidth: 4, strokeColor: '#ffffff' },
+                    color: { background: '#3B82F6', border: '#2563EB' }
+                });
+            } else if (e.type === "SubUnit") {
+                addNode(e.id, "subunit", e.label, {
+                    value: 25,
+                    font: { size: 14, color: '#0369A1', face: 'Noto Sans KR', strokeWidth: 3, strokeColor: '#ffffff' },
+                    color: { background: '#0EA5E9', border: '#0284C7' }
+                });
+                // Connect SubUnit to Standard
+                edges.push({ from: e.std, to: e.id, length: 150, width: 2, color: { opacity: 0.8, color: '#B0BEC5' } });
+            } else if (e.type === "Element") {
+                addNode(e.id, "element", e.label, {
+                    value: 15,
+                    title: e.cat,
+                    shape: "dot",
+                    color: "#94A3B8",
+                    font: { size: 12, color: '#475569', face: 'Noto Sans KR', strokeWidth: 2, strokeColor: '#ffffff' }
+                });
+            }
+        });
+
+        // Add Content & Activity Nodes
+        contents.forEach(content => {
+            // Content Node
+            addNode(content.id, "content", content.topic, {
+                value: 20,
+                font: { size: 13, color: '#064E3B', face: 'Noto Sans KR', strokeWidth: 3, strokeColor: '#ffffff' },
+                color: { background: '#10B981', border: '#059669' }
+            });
+            // Connect Content to SubUnit
+            edges.push({ from: content.subUnit, to: content.id, length: 100, color: { opacity: 0.6 } });
+
+            // Activity Node (Child of Content)
+            const actId = content.id + "_act";
+            addNode(actId, "activity", "활동", {
+                title: content.activity,
+                label: "활동",
+                font: { size: 11, color: '#92400E', face: 'Noto Sans KR', strokeWidth: 2, strokeColor: '#ffffff' },
+                color: { background: '#F59E0B', border: '#D97706' }
+            });
+            edges.push({ from: content.id, to: actId, length: 50, color: { opacity: 0.3, style: 'dash' } });
+
+            // Link Content to Elements
+            if (content.links) {
+                content.links.forEach(linkId => {
+                    // Ensure element exists (it should)
+                    if (dataEntities[linkId]) {
+                        edges.push({ from: content.id, to: linkId, length: 150, dashes: true, color: { opacity: 0.2, color: '#ffffff' } });
+                    }
+                });
+            }
+        });
+
+        // 3. Visualization Setup
+        const container = document.getElementById('mynetwork');
+        const data = { nodes: new vis.DataSet(nodes), edges: new vis.DataSet(edges) };
+        const options = {
+            nodes: {
+                shape: 'dot',
+                borderWidth: 0,
+                shadow: true,
+                font: {
+                    strokeWidth: 3,
+                    strokeColor: '#ffffff'
+                }
+            },
+            groups: {
+                standard: { color: { background: '#3B82F6', border: '#2563EB' } },
+                subunit: { color: { background: '#0EA5E9', border: '#0284C7' } },
+                content: { color: { background: '#10B981', border: '#059669' } },
+                activity: { color: { background: '#F59E0B', border: '#D97706' } },
+                element: { color: { background: '#64748B', border: '#475569' } }
+            },
+            edges: {
+                width: 1,
+                smooth: {
+                    type: 'continuous'
+                }
+            },
+            physics: {
+                forceAtlas2Based: {
+                    gravitationalConstant: -100,
+                    centralGravity: 0.005,
+                    springLength: 150,
+                    springConstant: 0.18
+                },
+                maxVelocity: 50,
+                solver: 'forceAtlas2Based',
+                timestep: 0.35,
+                stabilization: {
+                    enabled: true,
+                    iterations: 1000,
+                    updateInterval: 25
+                }
+            },
+            interaction: {
+                hover: true,
+                tooltipDelay: 200,
+                zoomView: true
+            }
+        };
+
+        const network = new vis.Network(container, data, options);
+
+        // 4. Interaction Logic
+        network.on("stabilizationIterationsDone", function () {
+            document.getElementById('loading').style.opacity = 0;
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+            }, 500);
+        });
+
+        network.on("click", function (params) {
+            if (params.nodes.length > 0) {
+                const nodeId = params.nodes[0];
+                const node = nodes.find(n => n.id === nodeId);
+                if (node) {
+                    showDetails(node);
+                }
+            } else {
+                closeDetails();
+            }
+        });
+
+        function showDetails(node) {
+            const panel = document.getElementById('detailsPanel');
+            const title = document.getElementById('detailTitle');
+            const body = document.getElementById('detailBody');
+
+            // Find full data object if possible
+            let contentHtml = "";
+
+            if (node.group === "standard") {
+                const entity = dataEntities[node.id];
+                title.innerText = entity.label;
+                title.style.color = "#1E3A8A"; // Blue 900
+                contentHtml = `
+                    <div class="detail-row">
+                        <div class="detail-label"><span class="emoji">📄</span> 내용 (Description)</div>
+                        <div class="detail-content">${entity.fullText}</div>
+                    </div>
+                `;
+            } else if (node.group === "subunit") {
+                const entity = dataEntities[node.id];
+                title.innerText = entity.label;
+                title.style.color = "#0369A1"; // Sky 800
+                contentHtml = `
+                    <div class="detail-row">
+                        <div class="detail-label"><span class="emoji">⬆️</span> 상위 성취기준</div>
+                        <div class="detail-content">${dataEntities[entity.std].label}</div>
+                    </div>
+                `;
+            } else if (node.group === "content") {
+                const contentData = contents.find(c => c.id === node.id);
+                title.innerText = "학습 내용";
+                title.style.color = "#064E3B"; // Emerald 900
+                contentHtml = `
+                    <div class="detail-row">
+                        <div class="detail-label"><span class="emoji">📌</span> 주제 (Topic)</div>
+                        <div class="detail-content">${contentData.topic}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label"><span class="emoji">🔗</span> 관련 활동</div>
+                        <div class="detail-content">${contentData.activity}</div>
+                    </div>
+                `;
+            } else if (node.group === "activity") {
+                const parentId = edges.find(e => e.to === node.id).from;
+                const contentData = contents.find(c => c.id === parentId);
+                title.innerText = "학습 활동";
+                title.style.color = "#92400E"; // Amber 800
+                contentHtml = `
+                    <div class="detail-row">
+                        <div class="detail-label"><span class="emoji">🏃</span> 활동 내용</div>
+                        <div class="detail-content">${contentData.activity}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label"><span class="emoji">📌</span> 관련 주제</div>
+                        <div class="detail-content">${contentData.topic}</div>
+                    </div>
+                `;
+            } else if (node.group === "element") {
+                const entity = dataEntities[node.id];
+                title.innerText = entity.label;
+                title.style.color = "#475569"; // Slate 600
+                contentHtml = `
+                    <div class="detail-row">
+                        <div class="detail-label"><span class="emoji">🏷️</span> 카테고리</div>
+                        <div class="detail-content">${entity.cat}</div>
+                    </div>
+                 `;
+            }
+
+            body.innerHTML = contentHtml;
+            panel.classList.add('active');
+        }
+
+        function closeDetails() {
+            document.getElementById('detailsPanel').classList.remove('active');
+        }
+    </script>
+
+    <!-- Chatbot UI -->
+    <button class="chat-btn" onclick="toggleChat()" id="chatButton">💬</button>
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <span>🎓 교육과정 도우미</span>
+            <button onclick="toggleChat()"
+                style="background:none; border:none; color:white; font-size:1.2rem; cursor:pointer;">&times;</button>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-message bot-msg">안녕! 나는 사회과 교육과정 도우미야. 궁금한 게 있으면 물어봐! 😊<br>예: "인권이 뭐야?", "학습 활동 추천해줘"
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" class="chat-input" placeholder="질문을 입력하세요..."
+                onkeypress="if(event.key==='Enter') sendMessage()">
+            <button class="chat-send" onclick="sendMessage()">전송</button>
+        </div>
+    </div>
+
+    <script>
+        // Chatbot Logic
+        const chatBody = document.getElementById('chatBody');
+        const chatInput = document.getElementById('chatInput');
+
+        function toggleChat() {
+            const container = document.getElementById('chatContainer');
+            const btn = document.getElementById('chatButton');
+            if (container.style.display === 'flex') {
+                container.style.display = 'none';
+                btn.style.display = 'flex';
+            } else {
+                container.style.display = 'flex';
+                btn.style.display = 'none';
+                setTimeout(() => chatInput.focus(), 100);
+            }
+        }
+
+        function addMessage(text, isUser) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `chat-message ${isUser ? 'user-msg' : 'bot-msg'}`;
+            msgDiv.innerHTML = text;
+            chatBody.appendChild(msgDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function sendMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            addMessage(text, true);
+            chatInput.value = '';
+
+            // Simulate AI response
+            setTimeout(() => {
+                const response = getBotResponse(text);
+                addMessage(response, false);
+            }, 500);
+        }
+
+        function getBotResponse(query) {
+            query = query.toLowerCase();
+
+            // 1. Check selected node context
+            const selectedNodes = network.getSelectedNodes();
+            let contextNode = null;
+            if (selectedNodes.length > 0) {
+                // Find node data
+                contextNode = nodes.find(n => n.id === selectedNodes[0]);
+            }
+
+            // 2. Keyword matching
+            if (query.includes("안녕")) return "반가워! 사회 공부 재미있게 해보자! 🏫";
+            if (query.includes("도와줘")) return "교육과정 내용이나 수업 활동에 대해 물어보면 설명해 줄게.";
+
+            // Specific Logic
+            if (query.includes("인권") || query.includes("권리")) {
+                return "인권은 사람이 사람답게 살 권리야. 우리 수업에서는 <strong>[6사03-01], [6사03-02]</strong> 성취기준에서 다루고 있어. '인권의 의미', '헌법', '인권 보호 활동' 등을 배워!";
+            }
+            if (query.includes("법") || query.includes("준법")) {
+                return "법은 사람들이 함께 살아가기 위한 약속이야. <strong>'법의 의미와 역할'</strong>을 배우고, 실생활에서 법을 지키는 태도를 기르는 게 중요해.";
+            }
+            if (query.includes("활동") || query.includes("수업")) {
+                if (contextNode && contextNode.group === 'content') {
+                    // Try to find activity linked to this content
+                    // This requires searching edges, but let's just generic response for now
+                    return `'${contextNode.label}' 주제로는 역할놀이나 캠페인 활동을 추천해! 친구들과 토론해보는 것도 좋아.`;
+                }
+                return "학생들이 직접 참여하는 활동이 좋아. <br>1. 인권 선언문 만들기 📜<br>2. 법 만들기 모의국회 ⚖️<br>3. 인권 침해 사례 조사하기 🔍<br>이런 활동들은 어때?";
+            }
+            if (query.includes("연결") || query.includes("관계")) {
+                return "이 그래프를 보면 알 수 있듯이, <strong>성취기준</strong>은 <strong>소단원</strong>과 연결되고, 소단원은 구체적인 <strong>학습 내용</strong>과 연결돼. 모든 건 유기적으로 이어져 있어!";
+            }
+
+            // Context specific response
+            if (contextNode) {
+                if (query.includes("이건 뭐야") || query.includes("설명")) {
+                    if (contextNode.title) return `<strong>${contextNode.label}</strong>에 대한 설명이야:<br>${contextNode.title}`;
+                    return `<strong>${contextNode.label}</strong>은 교육과정의 중요한 요소야.`;
+                }
+            }
+
+            return "음, 그건 조금 어려운 질문이네. '인권', '법', '활동', '연결' 같은 단어로 다시 물어봐 줄래? 아니면 그래프에서 노드를 클릭하고 물어봐!";
+        }
+    </script>
+
+</body>
+
+</html>
